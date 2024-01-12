@@ -9,24 +9,24 @@ public class Data {
     private String binders[];
     private Integer bookmarks;
     private Counts counts;
-    private int createdAt;
+    private String createdAt;
     private int favorites;
     private String hashtags[];
-    private String images[];
-    private String inReplyTo;
-    private String inReplyToId;
+    private String images;
+    private boolean inReplyTo;
+    private boolean inReplyToId;
     private String lang;
-    private String links[];
-    private String mentions[];
+    private String links;
+    private String mentions;
     private RawLocation rawLocation;
     private int retweets;
     private Sentiment sentiment;
     private String source;
     private String text;
-    private String type[];
+    private String type;
     private Date updatedAt;
     private User user;
-    private Object videos[];
+    private String videos[];
     
 	public String get_id() {
 		return _id;
@@ -52,10 +52,10 @@ public class Data {
 	public void setCounts(Counts counts) {
 		this.counts = counts;
 	}
-	public int getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(int createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
 	public int getFavorites() {
@@ -70,22 +70,22 @@ public class Data {
 	public void setHashtags(String[] hashtags) {
 		this.hashtags = hashtags;
 	}
-	public String[] getImages() {
+	public String getImages() {
 		return images;
 	}
-	public void setImages(String[] images) {
+	public void setImages(String images) {
 		this.images = images;
 	}
-	public String getInReplyTo() {
+	public boolean getInReplyTo() {
 		return inReplyTo;
 	}
-	public void setInReplyTo(String inReplyTo) {
+	public void setInReplyTo(boolean inReplyTo) {
 		this.inReplyTo = inReplyTo;
 	}
-	public String getInReplyToId() {
+	public boolean getInReplyToId() {
 		return inReplyToId;
 	}
-	public void setInReplyToId(String inReplyToId) {
+	public void setInReplyToId(boolean inReplyToId) {
 		this.inReplyToId = inReplyToId;
 	}
 	public String getLang() {
@@ -94,16 +94,16 @@ public class Data {
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
-	public String[] getLinks() {
+	public String getLinks() {
 		return links;
 	}
-	public void setLinks(String[] links) {
+	public void setLinks(String links) {
 		this.links = links;
 	}
-	public String[] getMentions() {
+	public String getMentions() {
 		return mentions;
 	}
-	public void setMentions(String[] mentions) {
+	public void setMentions(String mentions) {
 		this.mentions = mentions;
 	}
 	public RawLocation getRawLocation() {
@@ -136,10 +136,10 @@ public class Data {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String[] getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(String[] type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	public Date getUpdatedAt() {
@@ -154,10 +154,10 @@ public class Data {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Object[] getVideos() {
+	public String[] getVideos() {
 		return videos;
 	}
-	public void setVideos(Object[] videos) {
+	public void setVideos(String[] videos) {
 		this.videos = videos;
 	}
 

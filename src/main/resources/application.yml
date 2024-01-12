@@ -4,10 +4,16 @@ server:
 tweet.url: https://api2.tweetbinder.com
 tweet.user: centinela.inteligencia@gmail.com
 tweet.password: TBcentinela23
+tweet.urlStats : https://s3.eu-west-1.amazonaws.com/stats.tweetbinder.com
 
+ftp.serverFTP : Centinela
+ftp.portFTP : 21
+ftp.usernameFTP : informes-centinela
+ftp.passwordFTP : admin1
+  
 spring:
  datasource:
-  url: jdbc:mysql://192.168.1.128:3306/userscentinela
+  url: jdbc:mysql://192.168.1.140:3306/userscentinela
   username: usr_centinelaserv
   password: .SrvG9v%t4ZYow
   driver-class-name: com.mysql.cj.jdbc.Driver

@@ -12,5 +12,8 @@ public class CreateLiveReport {
     private Integer idProyecto;
     private Date in_startDate;
     private Date in_endDate;
+    private Integer in_IDQueryReport;
+    private String startDateProject;
+    private String endDateProject;
 
 }

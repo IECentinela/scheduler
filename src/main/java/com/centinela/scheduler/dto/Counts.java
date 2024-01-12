@@ -1,32 +1,31 @@
 package com.centinela.scheduler.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 public class Counts {
 	
-	private int textLength;
-	private int sentiment;
-	private int retweets;
-	private int totalRetweets;
-	private int favorites;
-	private int hashtags;
-	private int images;
-	private int links;
-	private int linksAndImages;
-	private int mentions;
-	private int quotes;
-	private int impressions;
-	private int totalReplies;
-	private int bookmarks;
-	private int originals;
-	private int clears;
-	private int replies;
-	private int publicationScore;
-	private float userValue;
-	private float tweetValue;
-	private int lists;
-	private int statuses;
+	private Integer textLength;
+	private Integer sentiment;
+	private Integer retweets;
+	private Integer totalRetweets;
+	private Integer favorites;
+	private Integer hashtags;
+	private Integer images;
+	private Integer links;
+	private Integer linksAndImages;
+	private Integer mentions;
+	private Integer quotes;
+	private Integer impressions;
+	private Integer totalReplies;
+	private Integer bookmarks;
+	private Integer originals;
+	private Integer clears;
+	private Integer replies;
+	private Integer publicationScore;
+	private Integer userValue;
+	private Double tweetValue;
+	private Integer lists;
+	private Integer statuses;
 
 }

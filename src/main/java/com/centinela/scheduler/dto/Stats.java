@@ -3,10 +3,9 @@ package com.centinela.scheduler.dto;
 import lombok.Data;
 
 @Data
-public class Sentiment {
+public class Stats {
 	
-	private String vote;
 	private General general;
-	private Double score;
+	private Sentiment sentiment;
 
 }
