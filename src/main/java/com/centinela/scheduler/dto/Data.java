@@ -20,13 +20,14 @@ public class Data {
     private String mentions;
     private RawLocation rawLocation;
     private int retweets;
-    private Sentiment sentiment;
+    private Sentiment sentimentObj;
     private String source;
     private String text;
     private String type;
     private Date updatedAt;
     private User user;
     private String videos[];
+    private String sentiment;
     
 	public String get_id() {
 		return _id;
@@ -119,10 +120,10 @@ public class Data {
 		this.retweets = retweets;
 	}
 	public Sentiment getSentiment() {
-		return sentiment;
+		return sentimentObj;
 	}
 	public void setSentiment(Sentiment sentiment) {
-		this.sentiment = sentiment;
+		this.sentimentObj = sentiment;
 	}
 	public String getSource() {
 		return source;
@@ -159,6 +160,13 @@ public class Data {
 	}
 	public void setVideos(String[] videos) {
 		this.videos = videos;
+	}
+	public void setSentiment(String sentiment) {
+		this.sentiment = sentiment;
+	}
+	
+	public String getSentimentS() {
+		return sentiment;
 	}
 
 }

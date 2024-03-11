@@ -150,89 +150,97 @@ public class FilesUtil {
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
 
 			try (InputStream inputStream = ftp.retrieveFileStream(rutaExcel)) {
-				workbook = new XSSFWorkbook(inputStream);
-			Sheet graphtext = workbook.getSheetAt(0);
+				
+				if(inputStream != null) {
+					workbook = new XSSFWorkbook(inputStream);
+					Sheet graphtext = workbook.getSheetAt(0);
 
-			if (graphtext != null) {
-				for (int i = 1; i <= graphtext.getLastRowNum(); i++) {
-					//logger.debug("Fila: "+i);
-					Row row = graphtext.getRow(i);
-					Data mencion = new Data();
-					User usuario = new User();
-					Counts countsMencion = new Counts();
-					Counts countsUser = new Counts();
-					RawLocation rawLocationMencion = new RawLocation();
-
-					for (int j = 0; j < row.getLastCellNum(); j++) {
-						Cell cell = row.getCell(j);
-						//logger.debug("Celda: "+j+" Valor celda: "+cell.toString());
-						if (cell != null) {
-							if (j == 0) {// Id de la MENCION
-								mencion.set_id(cell.getStringCellValue());
-							} else if (j == 1) {// Id de USUARIO
-								usuario.setId(cell.getStringCellValue());
-							} else if (j == 2) {// Nombre de USUARIO
-								usuario.setName(cell.getStringCellValue());
-							} else if (j == 3) {// Alias de USUARIO
-								usuario.setAlias(cell.getStringCellValue());
-							} else if (j == 4) {// Foto del USUARIO
-								usuario.setPicture(cell.getStringCellValue());
-							} else if (j == 5) {// Fecha createdAt del USUARIO
-
-							} else if (j == 6) {// Bio del USUARIO
-								usuario.setBio(cell.getStringCellValue().replaceAll("[\\[\\]]", ""));
-							} else if (j == 7) {// Followers USUARIO
-								try {
-									usuario.setFollowers(Integer.valueOf(cell.getStringCellValue()));
-								}catch(NumberFormatException e) {
-									logger.error("Fila: "+i);
-									logger.error("Error al convertir numero: "+e.getMessage());
-									
+					if (graphtext != null) {
+						for (int i = 1; i <= graphtext.getLastRowNum(); i++) {
+							//logger.debug("Fila: "+i);
+							Row row = graphtext.getRow(i);
+							Data mencion = new Data();
+							User usuario = new User();
+							Counts countsMencion = new Counts();
+							Counts countsUser = new Counts();
+							RawLocation rawLocationMencion = new RawLocation();
+		
+							for (int j = 0; j < row.getLastCellNum(); j++) {
+								Cell cell = row.getCell(j);
+								//logger.debug("Celda: "+j+" Valor celda: "+cell.toString());
+								if (cell != null) {
+									if (j == 0) {// Id de la MENCION
+										mencion.set_id(cell.getStringCellValue());
+									} else if (j == 1) {// Id de USUARIO
+										usuario.setId(cell.getStringCellValue());
+									} else if (j == 2) {// Nombre de USUARIO
+										usuario.setName(cell.getStringCellValue());
+									} else if (j == 3) {// Alias de USUARIO
+										usuario.setAlias(cell.getStringCellValue());
+									} else if (j == 4) {// Foto del USUARIO
+										usuario.setPicture(cell.getStringCellValue());
+									} else if (j == 5) {// Fecha createdAt del USUARIO
+		
+									} else if (j == 6) {// Bio del USUARIO
+										usuario.setBio(cell.getStringCellValue().replaceAll("[\\[\\]]", ""));
+									} else if (j == 7) {// Followers USUARIO
+										try {
+											usuario.setFollowers(Integer.valueOf(cell.getStringCellValue()));
+										}catch(NumberFormatException e) {
+											logger.error("Fila: "+i);
+											logger.error("Error al convertir numero: "+e.getMessage());
+											
+										}
+										
+									} else if (j == 8) {// Following USUARIO
+										usuario.setFollowing(Integer.valueOf(cell.getStringCellValue()));
+									} else if (j == 9) {// Lists CONTADORES USUARIO
+										countsUser.setLists(Integer.valueOf(cell.getStringCellValue()));
+									} else if (j == 10) {// Tweets CONTADORES USUARIO
+		
+									} else if (j == 11) {// Verified del USUARIO
+										usuario.setVerified(Boolean.parseBoolean(cell.getStringCellValue()));
+									} else if (j == 12) {// Location del USUARIO
+										usuario.setLocation(cell.getStringCellValue());
+									} else if (j == 13) {// Lenguaje de la MENCION
+										mencion.setLang(cell.getStringCellValue());
+									} else if (j == 14) {// Tipo de la MENCION
+										mencion.setSentiment(cell.getStringCellValue());
+									} else if (j == 15) {// Tipo de la MENCION
+										mencion.setType(cell.getStringCellValue());
+									} else if (j == 16) {// Texto de la MENCION
+										mencion.setText(cell.getStringCellValue());
+									} else if (j == 17) {// Fecha de la MENCION
+										mencion.setCreatedAt(cell.getStringCellValue());
+									} else if (j == 18) {// mention_names<gx:list[category]>
+										mencion.setMentions(cell.getStringCellValue());
+									} else if (j == 19) {// retweets<gx:number> CONTADORES MENCION
+										countsMencion.setRetweets(Integer.valueOf(cell.getStringCellValue()));
+										mencion.setRetweets(Integer.valueOf(cell.getStringCellValue()));
+									} else if (j == 20) {// favorites<gx:number> CONTADORES MENCION
+										countsMencion.setFavorites(Integer.valueOf(cell.getStringCellValue()));
+									} else if (j == 21) {// replies<gx:number> CONTADORES MENCION
+										countsMencion.setReplies(Integer.valueOf(cell.getStringCellValue()));
+									} else if (j == 22) {// links<gx:list[url]> MENCION
+										mencion.setLinks(cell.getStringCellValue());
+									} else if (j == 24) {// image_links<gx:list[url]> MENCION
+										mencion.setImages(cell.getStringCellValue());
+									} else if (j == 26) {// location<gx:text> MENCION
+										rawLocationMencion.setLocationString(cell.getStringCellValue());
+									}
 								}
-								
-							} else if (j == 8) {// Following USUARIO
-								usuario.setFollowing(Integer.valueOf(cell.getStringCellValue()));
-							} else if (j == 9) {// Lists CONTADORES USUARIO
-								countsUser.setLists(Integer.valueOf(cell.getStringCellValue()));
-							} else if (j == 10) {// Tweets CONTADORES USUARIO
-
-							} else if (j == 11) {// Verified del USUARIO
-								usuario.setVerified(Boolean.parseBoolean(cell.getStringCellValue()));
-							} else if (j == 12) {// Location del USUARIO
-								usuario.setLocation(cell.getStringCellValue());
-							} else if (j == 13) {// Lenguaje de la MENCION
-								mencion.setLang(cell.getStringCellValue());
-							} else if (j == 14) {// Tipo de la MENCION
-								mencion.setType(cell.getStringCellValue());
-							} else if (j == 15) {// Texto de la MENCION
-								mencion.setText(cell.getStringCellValue());
-							} else if (j == 16) {// Fecha de la MENCION
-								mencion.setCreatedAt(cell.getStringCellValue());
-							} else if (j == 17) {// mention_names<gx:list[category]>
-								mencion.setMentions(cell.getStringCellValue());
-							} else if (j == 18) {// retweets<gx:number> CONTADORES MENCION
-								countsMencion.setRetweets(Integer.valueOf(cell.getStringCellValue()));
-								mencion.setRetweets(Integer.valueOf(cell.getStringCellValue()));
-							} else if (j == 19) {// favorites<gx:number> CONTADORES MENCION
-								countsMencion.setFavorites(Integer.valueOf(cell.getStringCellValue()));
-							} else if (j == 20) {// replies<gx:number> CONTADORES MENCION
-								countsMencion.setReplies(Integer.valueOf(cell.getStringCellValue()));
-							} else if (j == 21) {// links<gx:list[url]> MENCION
-								mencion.setLinks(cell.getStringCellValue());
-							} else if (j == 23) {// image_links<gx:list[url]> MENCION
-								mencion.setImages(cell.getStringCellValue());
-							} else if (j == 25) {// location<gx:text> MENCION
-								rawLocationMencion.setLocationString(cell.getStringCellValue());
 							}
+							usuario.setCounts(countsUser);
+							mencion.setUser(usuario);
+							mencion.setCounts(countsMencion);
+							menciones.add(mencion);
 						}
 					}
-					usuario.setCounts(countsUser);
-					mencion.setUser(usuario);
-					mencion.setCounts(countsMencion);
-					menciones.add(mencion);
+					workbook.close();
+				}else {
+					logger.error("El archivo no fue encontrado o se encuentra vacio...");
 				}
-			}
-			workbook.close();
+				
 		} catch (IOException e) {
 			logger.error("Error al procesar FTP: " + e.getMessage());
 			e.printStackTrace();

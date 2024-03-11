@@ -102,10 +102,10 @@ public class ExecuteTasks {
 
 	@Scheduled(cron = "0 0 7 * * ?")
 	public void getLogin() {
-		if (token == null) {
+//		if (token == null) {
 			loginTweetSched();
 			logger.info("Token tweet binder: " + token.getAuthToken());
-		}
+//		}
 	}
 
 	// TODO Generar tarea que se ejecute todos los días a las 23:59 para lectura y
@@ -230,7 +230,12 @@ public class ExecuteTasks {
 						List<ReportsId> queryesReport = getReportsIdByIdProject(sched.getFk_project());
 
 						for (ReportsId query : queryesReport) {
-							if (query.getFk_project() == sched.getFk_project() && query.getFk_source() == 1) {// Deben coincidir IDProyecto y IDSource = 1
+							logger.debug("query.getFk_project(): " + query.getFk_project());
+							logger.debug("sched.getFk_project(): " + sched.getFk_project());
+							logger.debug("query.getFk_source(): " + query.getFk_source());
+							logger.debug("Comparacion IDs: "+query.getFk_project().compareTo(sched.getFk_project()));
+							logger.debug("Comparacion Source: "+query.getFk_source().compareTo(1));
+							if ((query.getFk_project().compareTo(sched.getFk_project()) == 0) && (query.getFk_source().compareTo(1) == 0)) {// Deben coincidir IDProyecto y IDSource = 1
 								logger.debug("Creando reporte del proyecto con ID: " + query.getFk_project() + " y source: " + query.getFk_source() + " con el query: "+ query.getQueryreport().getQuery());
 
 								crearReporte(query);
@@ -249,7 +254,7 @@ public class ExecuteTasks {
 									// proyecto con el id que estamos ejecutando
 									List<ReportsId> queryesReport2 = getReportsIdByIdProject(sched.getFk_project());
 									for (ReportsId query2 : queryesReport2) {
-										if (query2.getFk_project() == sched.getFk_project() && query2.getFk_source() == 1) {
+										if ((query2.getFk_project().compareTo(sched.getFk_project()) == 0) && (query2.getFk_source().compareTo(1) == 0)) {
 											TweetServiceImpl tweetService = new TweetServiceImpl(restTemplate, entityManager);
 											logger.debug("ID de proyecto: "+query2.getFk_project().toString());
 											logger.debug("QueryReport: "+query2.getResourceId());
@@ -257,8 +262,10 @@ public class ExecuteTasks {
 											logger.debug(statsResponse.toString());
 										}
 									}
-								}, 10, TimeUnit.MINUTES);
+								}, 5, TimeUnit.MINUTES);
 								executor.shutdown();
+							}else {
+								logger.info("El reporte con ID: "+sched.getFk_project()+" no se genero...");
 							}
 						}
 
@@ -290,6 +297,14 @@ public class ExecuteTasks {
 	}
 
 	public void crearReporte(ReportsId id) {
+		logger.debug("Token crear reporte: "+token);
+		
+		if(token == null || token.getAuthToken() == "") {
+			logger.debug("Token null, generando nuevo...");
+			getLogin();
+			logger.debug("Nuevo token crear reporte: "+token);
+		}
+		
 		if (token != null && token.getAuthToken() != "") {
 			TweetServiceImpl tweetService = new TweetServiceImpl(restTemplate, entityManager);
 			CreateLiveReport parametros = null;
@@ -311,6 +326,8 @@ public class ExecuteTasks {
 							newMust.add(valor);
 						}else if(valor.contains("since:")){
 							newMust.add("since:"+fechaHoy());
+						}else if(valor.contains("until:")){
+							logger.debug("Se elimina ---"+valor+"--- del query del proyecto "+id.getFk_project());
 						}else {
 							newMust.add(valor);
 						}
@@ -337,6 +354,8 @@ public class ExecuteTasks {
 				String respuesta = tweetService.createLiveReport(parametros, tweetApiUrl);
 				logger.debug("Respuesta crearReporte: " + respuesta);
 			}
+		}else {
+			logger.debug("Reporte no generado con ID: "+id.getFk_project());
 		}
 	}
 
